@@ -89,10 +89,6 @@ ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=10080
 ```
 
-## Screenshots
-
-*(Add dashboard, kanban board, and application detail screenshots here)*
-
 ## License
 
 MIT
