@@ -1,27 +1,23 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
 from app.routers import auth, applications, interviews, followups, resumes
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Run migrations on startup
-    import subprocess
-    subprocess.run(["alembic", "upgrade", "head"], check=True)
-    yield
-
+import os
 
 app = FastAPI(
     title="JobRover — Application Tracker",
     version="1.0.0",
-    description="P1: Track every job application, interview, and follow-up.",
-    lifespan=lifespan
+    description="P1: Track every job application, interview, and follow-up."
 )
+
+frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        frontend_url,
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
