@@ -35,5 +35,5 @@ services:
 databases:
   - name: jobrover-tracker-db
     databaseName: jobrover_tracker
-    user: postgres
+    user: jobrover_user
     plan: free
