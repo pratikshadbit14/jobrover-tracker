@@ -7,7 +7,6 @@ import os
 
 load_dotenv()
 
-# Import Base and all models so Alembic can detect them
 from app.db.base import Base
 from app.models import (
     User, Resume, Application,
@@ -16,8 +15,14 @@ from app.models import (
 
 config = context.config
 
-# Override sqlalchemy.url from .env
-config.set_main_option("sqlalchemy.url", os.getenv("LOCAL_DATABASE_URL"))
+# Use LOCAL_DATABASE_URL for local migrations, DATABASE_URL for production
+db_url = os.getenv("LOCAL_DATABASE_URL") or os.getenv("DATABASE_URL", "")
+
+# Fix Render's URL format
+if db_url.startswith("postgresql://"):
+    db_url = db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
+config.set_main_option("sqlalchemy.url", db_url)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)

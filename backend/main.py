@@ -21,16 +21,11 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://jobrover-tracker.vercel.app",  # update this after Vercel deploy
-        "*"   # temporarily allow all — tighten after first deploy
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)
+))
 
 app.include_router(auth.router)
 app.include_router(applications.router)
