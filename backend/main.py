@@ -25,3 +25,7 @@ app.include_router(resumes.router)
 @app.get("/health")
 async def health():
     return {"status": "ok", "service": "p1-tracker"}
+
+@app.get("/")
+def read_root():
+    return {"message": "JobRover Intelligence API is running successfully!"}
